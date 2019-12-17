@@ -9,7 +9,12 @@
     <!-- 轮播图 -->
 
     <!-- 模块导航 -->
-
+      <view class="model">
+        <view class="item" wx:for="{{moduleList}}" wx:key="id">
+          <image src="{{item.icon}}"></image>
+          <text>{{item.name}}</text>
+        </view>
+      </view>
     <!-- 模块导航 -->
 
     <!-- 图片导航 -->
@@ -29,7 +34,8 @@
     }
 
     data = {
-      swiperList: []  // 接收轮播图链接
+      swiperList: [],  // 接收轮播图链接
+      moduleList: []  // 接收模块导航链接
     }
 
     methods = {
@@ -37,13 +43,28 @@
     }
 
     // 数据渲染
-    async onLoad() {
-      // 获取
+    onLoad() {
+      // 获取轮播图
+      this.getSwiperList()
+
+      // 获取导航
+      this.getModulList()
+    }
+
+    async getSwiperList() {
       const swiperResponse = await wepy.request({
         url: 'https://www.liulongbin.top:8081/slides'
       })
       this.swiperList = swiperResponse.data
-      console.log(swiperResponse)
+      // 异步请求时，需要强制刷新数据
+      this.$apply()
+    }
+
+    async getModulList() {
+      const moduleResponse = await wepy.request({
+        url: 'https://www.liulongbin.top:8081/categories'
+      })
+      this.moduleList = moduleResponse.data
       this.$apply()
     }
   }
@@ -55,4 +76,24 @@ swiper-item image{
   height: 100%;
 }
 
+.model{
+  display: flex;
+  flex-wrap: wrap;
+
+  .item{
+    width: 33.33%;
+    box-sizing: border-box;
+    border-right: 1rpx solid #eee;
+    border-bottom: 1rpx solid #eee;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30rpx 0;
+    image{
+      width: 75rpx;
+      height: 75rpx;
+    }
+  }
+}
 </style>
