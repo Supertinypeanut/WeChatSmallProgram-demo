@@ -1,0 +1,18 @@
+<template>
+    <view>
+        <button>问答</button>
+    </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class extends wepy.page {
+  config = {
+    navigationBarTitleText: '问答'
+  }
+}
+</script>
+
+<style>
+
+</style>

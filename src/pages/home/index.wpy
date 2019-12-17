@@ -1,0 +1,58 @@
+<template>
+  <view>
+    <!-- 轮播图 -->
+    <swiper indicator-dots circular autoplay>
+      <swiper-item wx:for="{{swiperList}}" wx:key="id">
+          <image src="{{item.image}}" mode="scaleToFill"></image>
+      </swiper-item>
+    </swiper>    
+    <!-- 轮播图 -->
+
+    <!-- 模块导航 -->
+
+    <!-- 模块导航 -->
+
+    <!-- 图片导航 -->
+
+    <!-- 图片导航 -->
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class extends wepy.page {
+    config = {
+      navigationBarTitleText: '水墨筝舍',
+      navigationBarBackgroundColor: '#e00',
+      navigationBarTextStyle: 'white'
+    }
+
+    data = {
+      swiperList: []  // 接收轮播图链接
+    }
+
+    methods = {
+  
+    }
+
+    // 数据渲染
+    async onLoad() {
+      // 获取
+      const swiperResponse = await wepy.request({
+        url: 'https://www.liulongbin.top:8081/slides'
+      })
+      this.swiperList = swiperResponse.data
+      console.log(swiperResponse)
+      this.$apply()
+    }
+  }
+</script>
+
+<style lang="less">
+swiper-item image{
+  width: 100%;
+  height: 100%;
+}
+
+</style>

@@ -1,0 +1,18 @@
+<template>
+    <view>
+        <button>我的</button>
+    </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class extends wepy.page {
+  config = {
+    navigationBarTitleText: '我的'
+  }
+}
+</script>
+
+<style>
+
+</style>

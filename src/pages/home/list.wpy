@@ -1,6 +1,6 @@
 <template>
     <view>
-        <button>111</button>
+        <button>首页</button>
     </view>
 </template>
 
