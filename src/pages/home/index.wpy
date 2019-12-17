@@ -10,7 +10,7 @@
 
     <!-- 模块导航 -->
       <view class="model">
-        <view class="item" wx:for="{{moduleList}}" wx:key="id">
+        <view class="item" wx:for="{{moduleList}}" wx:key="id" @tap="onTapModule({{item}})">
           <image src="{{item.icon}}"></image>
           <text>{{item.name}}</text>
         </view>
@@ -39,6 +39,11 @@
     }
 
     methods = {
+      onTapModule(item) {
+        wepy.navigateTo({
+          url: `/pages/home/list?id=${item.id}&name=${item.name}`
+        })
+      }
   
     }
 

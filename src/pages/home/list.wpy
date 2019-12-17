@@ -1,18 +1,72 @@
 <template>
-    <view>
-        <button>首页</button>
+  <view class="shop-list">
+    <view class="shop-item" wx:for="{{list}}" wx:key="id" @tap="goShopDetail({{item.id}})">
+      <view>
+        <image src="{{item.images[0]}}"></image>
+      </view>
+      <view class="shop-info">
+        <text>{{item.name}}</text>
+        <text>电话：{{item.phone}}</text>
+        <text>地址：{{item.address}}</text>
+        <text>营业时间：{{item.businessHours}}</text>
+      </view>
     </view>
+  </view>
 </template>
 
 <script>
 import wepy from 'wepy'
 export default class extends wepy.page {
-  config = {
-    navigationBarTitleText: 'home'
+  data = {
+    list: [], // 数据列表
+    limit: 10, // 几条数据
+    page: 1 // 第几页
+  }
+
+  methods = {
+    goShopDetail(id) {
+      console.log(id)
+    }
+  }
+
+  onLoad(query) {
+    // 获取列表数据
+    this.getList(query)
+    // 设置标题
+    wepy.setNavigationBarTitle({
+      title: query.name
+    })
+  }
+
+  async getList(query) {
+    const listResponse = await wepy.request({
+      url: `https://www.liulongbin.top:8081/categories/${query.id}/shops?_page=${this.page}&_limit=${this.limit}`
+    })
+    this.list = listResponse.data
+    console.log(listResponse)
+    this.$apply()
   }
 }
 </script>
 
-<style>
-
+<style lang="less">
+.shop-item {
+  & + .shop-item {
+    border-top: 1rpx solid #efefef;
+  }
+  display: flex;
+  padding: 15rpx;
+  image {
+    width: 250rpx;
+    height: 250rpx;
+    display: block;
+    margin-right: 15rpx;
+  }
+  .shop-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 24rpx;
+  }
+}
 </style>
