@@ -1,0 +1,33 @@
+<template>
+  <view class="container">
+    iii
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class extends wepy.page {
+    config = {
+      navigationBarTitleText: '水墨筝舍',
+      navigationBarBackgroundColor: '#e00',
+      navigationBarTextStyle: 'white'
+    }
+
+    data = {
+
+    }
+
+    methods = {
+  
+    }
+
+    onLoad() {
+
+    }
+  }
+</script>
+
+<style lang="less">
+
+</style>
