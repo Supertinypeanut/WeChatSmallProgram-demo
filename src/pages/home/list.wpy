@@ -17,6 +17,12 @@
 <script>
 import wepy from 'wepy'
 export default class extends wepy.page {
+  config = {
+    enablePullDownRefresh: true,
+    backgroundColor: '#efefef',
+    backgroundTextStyle: 'dark'
+  }
+
   data = {
     list: [], // 数据列表
     limit: 10, // 几条数据
@@ -57,7 +63,7 @@ export default class extends wepy.page {
     this.$apply()
   }
 
-  // 上拉刷新
+  // 上拉加载
   onReachBottom() {
     if (!this.isNoRequest) {
       return
@@ -66,6 +72,16 @@ export default class extends wepy.page {
     // 让页码加一
     this.page++
     this.getList()
+  }
+
+  // 下拉刷新
+  onPullDownRefresh() {
+    // 重置数据
+    this.page = 1
+    this.list = []
+    this.getList()
+    // 手动关闭下拉刷新
+    wepy.stopPullDownRefresh()
   }
 }
 </script>
