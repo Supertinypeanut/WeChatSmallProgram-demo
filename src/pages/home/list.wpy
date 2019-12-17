@@ -20,7 +20,9 @@ export default class extends wepy.page {
   data = {
     list: [], // 数据列表
     limit: 10, // 几条数据
-    page: 1 // 第几页
+    page: 1, // 第几页
+    query: {},  // 请求参数
+    isNoRequest: true // 判断请求状态
   }
 
   methods = {
@@ -30,21 +32,40 @@ export default class extends wepy.page {
   }
 
   onLoad(query) {
+    this.query = query
     // 获取列表数据
-    this.getList(query)
+    this.getList()
     // 设置标题
     wepy.setNavigationBarTitle({
       title: query.name
     })
+    this.$apply()
   }
 
-  async getList(query) {
+  async getList() {
+    // 更改为请求状态
+    this.isNoRequest = false
+
+    // 发送请求列表
     const listResponse = await wepy.request({
-      url: `https://www.liulongbin.top:8081/categories/${query.id}/shops?_page=${this.page}&_limit=${this.limit}`
+      url: `https://www.liulongbin.top:8081/categories/${this.query.id}/shops?_page=${this.page}&_limit=${this.limit}`
     })
-    this.list = listResponse.data
+    this.list = [].concat(this.list, listResponse.data)
     console.log(listResponse)
+    // 更改为未请求状态
+    this.isNoRequest = true
     this.$apply()
+  }
+
+  // 上拉刷新
+  onReachBottom() {
+    if (!this.isNoRequest) {
+      return
+    }
+
+    // 让页码加一
+    this.page++
+    this.getList()
   }
 }
 </script>
