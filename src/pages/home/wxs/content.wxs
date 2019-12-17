@@ -1,0 +1,7 @@
+function transformURL(url) {
+  return url.replace('/w.h/', '/100.100/')
+}
+
+module.exports = {
+  transformURL: transformURL
+}

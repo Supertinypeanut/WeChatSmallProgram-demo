@@ -32,8 +32,11 @@ export default class extends wepy.page {
   }
 
   methods = {
+    // 跳转页面
     goShopDetail(id) {
-      console.log(id)
+      wepy.navigateTo({
+        url: `/pages/home/content?id=${id}`
+      })
     }
   }
 
